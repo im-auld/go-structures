@@ -7,7 +7,7 @@ import (
 
 // Node ...
 type Node struct {
-	value int
+	value interface{}
 	next  *Node
 }
 
@@ -17,7 +17,19 @@ func (n Node) String() string {
 
 // List ...
 type List struct {
-	head *Node
+	head   *Node
+	length int
+}
+
+// Init initializes an empty list
+func (l *List) Init() *List {
+	l.length = 0
+	return l
+}
+
+// New returns an initialized list
+func New() *List {
+	return new(List).Init()
 }
 
 func (l *List) String() string {
@@ -43,6 +55,7 @@ func (l *List) Insert(node *Node) {
 	} else {
 		l.head = node
 	}
+	l.length++
 }
 
 // Search ..
@@ -60,16 +73,13 @@ func (l *List) Pop() *Node {
 	node := l.head
 	l.head = l.head.next
 	node.next = nil
+	l.length--
 	return node
 }
 
 // Size ...
 func (l *List) Size() int {
-	size := 0
-	for node := l.head; node != nil; node = node.next {
-		size++
-	}
-	return size
+	return l.length
 }
 
 // Remove ...
@@ -84,6 +94,7 @@ func (l *List) Remove(node *Node) {
 				previous.next = current.next
 			}
 			current.next = nil
+			l.length--
 			break
 		}
 		previous = current
@@ -92,14 +103,18 @@ func (l *List) Remove(node *Node) {
 
 func main() {
 	node := Node{10, nil}
-	node2 := Node{20, nil}
-	node3 := Node{20, nil}
-	list := &List{&node}
+	node2 := Node{15, nil}
+	node3 := Node{"Hello, world", nil}
+	list := New()
+	fmt.Println(list.Size())
+	list.Insert(&node)
 	list.Insert(&node2)
 	list.Insert(&node3)
+	fmt.Println(list.Size())
 	fmt.Println(list)
 	list.Remove(&node3)
 	fmt.Println(list)
+	fmt.Println(list.Size())
 	// list.Insert(node2)
 	// fmt.Println(list)
 	// fmt.Println(fmt.Sprintf("Value 10 in List: %v", list.Search(10)))
