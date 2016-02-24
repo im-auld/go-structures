@@ -7,7 +7,7 @@ import (
 
 // Node for use in a Stack
 type Node struct {
-	value int
+	value interface{}
 	next  *Node
 }
 
@@ -17,7 +17,19 @@ func (n Node) String() string {
 
 // Stack - A Last In, First Out (LIFO) structure
 type Stack struct {
-	top *Node
+	top  *Node
+	size int
+}
+
+// Init initializes a new stack
+func (s *Stack) Init() *Stack {
+	s.size = 0
+	return s
+}
+
+// Creates a new stack
+func NewStack() *Stack {
+	return new(Stack).Init()
 }
 
 func (s *Stack) String() string {
@@ -39,24 +51,27 @@ func (s *Stack) String() string {
 func (s *Stack) Push(node *Node) {
 	node.next = s.top
 	s.top = node
+	s.size++
 }
 
 // Pop the top off the ``Stack``
 func (s *Stack) Pop() *Node {
 	popped := s.top
 	s.top = s.top.next
+	s.size--
 	return popped
 }
 
 func main() {
 	node1 := &Node{10, nil}
-	node2 := &Node{15, nil}
+	node2 := &Node{"Words", nil}
 	node3 := &Node{20, nil}
-	stack := &Stack{node1}
+	stack := NewStack()
+	stack.Push(node1)
 	stack.Push(node2)
 	stack.Push(node3)
-	fmt.Println(stack)
+	fmt.Println(stack, stack.size)
 	fmt.Println(stack.Pop())
-	fmt.Println(stack)
+	fmt.Println(stack, stack.size)
 
 }
