@@ -27,7 +27,7 @@ func (l *List) Init() *List {
 	return l
 }
 
-// New returns an initialized list
+// NewList returns an initialized list
 func NewList() *List {
 	return new(List).Init()
 }
