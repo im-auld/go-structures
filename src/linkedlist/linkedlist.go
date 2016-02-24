@@ -28,7 +28,7 @@ func (l *List) Init() *List {
 }
 
 // New returns an initialized list
-func New() *List {
+func NewList() *List {
 	return new(List).Init()
 }
 
@@ -105,7 +105,7 @@ func main() {
 	node := Node{10, nil}
 	node2 := Node{15, nil}
 	node3 := Node{"Hello, world", nil}
-	list := New()
+	list := NewList()
 	fmt.Println(list.Size())
 	list.Insert(&node)
 	list.Insert(&node2)
